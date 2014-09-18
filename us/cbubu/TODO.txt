@@ -1,0 +1,8 @@
+add craigb user
+add gui
+set up /denver2/users/craigb
+set up /denver2/groups/rcloud
+set up /results
+install chrome
+install rubymine
+set up bash aliases
