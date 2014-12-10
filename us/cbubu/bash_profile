@@ -21,4 +21,5 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-export PS1="[\u@\h \W]\\$ "
+export PS1="\[\e[1;30m\][\u@\h \W]\\$ \[\e[0m\]"
+export PATH=$HOME/bin:$PATH
