@@ -86,6 +86,7 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 alias ls='ls -G'
+alias be='bundle exec'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -120,7 +121,32 @@ function seec {
     cd /seec/$1
 }
 
+function ussh {
+    ssh ubuntu@$1 -i ~/spade/infrastructure/.chef/pem/spade-controller.pem
+}
+
+function spade-status {
+    http $SPADE_SVC:5000/deployments/$1 | jq '{provisioningStatus: .provisioningStatus}'
+    http $SPADE_SVC:5000/deployments/$1 | jq '{applianceConfigurationSteps: .applianceConfigurationSteps}'
+    http $SPADE_SVC:5000/deployments/$1 | jq '{applicationConfigurationSteps: .applicationConfigurationSteps}'
+}
+
+function spade-instances {
+    http $SPADE_SVC:5000/deployments/$1/instances | jq -r .[].name
+}
+
+function spade-deps {
+    http $SPADE_SVC:5000/deployments | jq -r .[].name
+}
+
+function spade-get-password {
+    nova get-password $1 ~/spade/infrastructure/.chef/pem/spade-controller.pem
+}
+
+function artifactory-deploy {
+    http PUT http://artifactory.mia.ucloud.int/artifactory/simple/ultimate-local/ucloud/scripts/`basename $1` < $1 -a admin:Purpl3c0w
+}
+
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
-
-
+source ~/.os/spade-mia-ice
